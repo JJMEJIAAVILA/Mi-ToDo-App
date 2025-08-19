@@ -29,9 +29,44 @@ Una aplicación de lista de tareas sencilla y eficiente para Android, creada par
 ## 🗺️ Requisitos y Diagramas
 
 * **Requisitos del Sistema:** Se debe conocer el funcionamiento de Android Studio y su SDK, y contar con un dispositivo virtual o físico para pruebas.
-* **Diagrama de Clases:** (Se describe en el código fuente: `Task`, `TaskAdapter`, `TaskDatabaseHelper`, `MainActivity`).
 * **Diagrama de Paquetes:** La estructura de paquetes es `com.jhonjairo.mytodoapp`, que contiene las clases principales y los componentes de la aplicación.
 * **Mapa de Navegación:** El flujo es lineal: la aplicación abre la pantalla principal que contiene la lista de tareas y las opciones para agregar o eliminar.
+* **Diagrama de Clases:** (Se describe en el código fuente: `Task`, `TaskAdapter`, `TaskDatabaseHelper`, `MainActivity`).
+ 
+* classDiagram
+  class MainActivity {
+  + dbHelper: TaskDatabaseHelper
+  + taskList: MutableList<Task>
+  + taskAdapter: TaskAdapter
+  + onCreate()
+  + setupListeners()
+  + setupRecyclerView()
+  }
+  class Task {
+  + name: String
+  + isCompleted: Boolean
+  + id: Long
+  }
+  class TaskAdapter {
+  - tasks: MutableList<Task>
+  - onDeleteClickListener: (Task) -> Unit
+  - onTaskCheckedChangeListener: (Task) -> Unit
+  + onCreateViewHolder()
+  + onBindViewHolder()
+  + getItemCount()
+  }
+  class TaskDatabaseHelper {
+  + addTask(task)
+  + getTasks()
+  + deleteTask(task)
+  + updateTask(task)
+  }
+
+  MainActivity --> TaskDatabaseHelper
+  MainActivity --> TaskAdapter
+  MainActivity --> Task
+  TaskAdapter --> Task
+  TaskDatabaseHelper --> Task
 
 ## 🚀 Cómo Empezar
 
